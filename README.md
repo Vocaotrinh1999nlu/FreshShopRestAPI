@@ -1,2 +1,2 @@
 # FreshShopRestAPI
-# Build Rest API using Spring boot, JPA
+ Build Rest API using Spring boot, JPA
