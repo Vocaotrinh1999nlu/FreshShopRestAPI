@@ -3,9 +3,11 @@ package vct.freshshop.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vct.freshshop.dto.ProductDTO;
 import vct.freshshop.entity.Category;
 import vct.freshshop.entity.Product;
 import vct.freshshop.repositories.CategoryRepository;
@@ -22,6 +24,9 @@ public class ProductService {
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Optional<Product> findById(int id) {
 		return productRepository.findById(id);
@@ -44,11 +49,7 @@ public class ProductService {
 	}
 
 	public void updateProduct(Product product, Product newProduct) {// p is new product
-		product.setName(newProduct.getName());
-		product.setDescription(newProduct.getDescription());
-		product.setImage(newProduct.getImage());
-		product.setPrice(newProduct.getPrice());
-		product.setActive(newProduct.isActive());
+		modelMapper.map(newProduct, product);
 		productRepository.save(product);
 	}
 
