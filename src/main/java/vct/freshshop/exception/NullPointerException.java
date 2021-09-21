@@ -21,7 +21,6 @@ public class NullPointerException extends RuntimeException {
 	
 	
 	public NullPointerException(Throwable cause) {
-		
 		super(cause);
 	}
 }

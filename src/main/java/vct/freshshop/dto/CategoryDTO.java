@@ -1,6 +1,6 @@
 package vct.freshshop.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +18,5 @@ public class CategoryDTO {
 	
 	private boolean isActive;
 	
-	private List<Product> products;
+	private Set<Product> products;
 }

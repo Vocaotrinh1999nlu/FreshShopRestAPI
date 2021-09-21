@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import vct.freshshop.dto.CategoryDTO;
 import vct.freshshop.dto.ProductDTO;
 import vct.freshshop.entity.Product;
+import vct.freshshop.exception.NullPointerException;
 import vct.freshshop.exception.ResourceNotFoundException;
 import vct.freshshop.service.ProductService;
 
@@ -40,10 +42,11 @@ public class ProductController {
 				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<List<ProductDTO>>(products, HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/product/{id}")
 	public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") int id) {
 		Optional<Product> product = productService.findById(id);
+		product.ifPresent(p->System.out.println(p.getCategory().toString()));
 		Optional<ProductDTO> productDTO = product.map(p -> modelMapper.map(p, ProductDTO.class));
 		return productDTO.map(p -> new ResponseEntity<ProductDTO>(p, HttpStatus.OK))
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -67,9 +70,10 @@ public class ProductController {
 	@DeleteMapping("/product/{id}")
 	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
 		Optional<Product> product = productService.findById(id);
-		return product.map(p->{
+		return product.map(p -> {
 			productService.deleteProduct(p);
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-		}).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
+		}).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 	}
+
 }

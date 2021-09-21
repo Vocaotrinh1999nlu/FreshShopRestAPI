@@ -36,7 +36,11 @@ public class CategoryService {
 	}
 	
 	public void updateCategory(Category category,Category newCategory) {
-		modelMapper.map(category, newCategory);
+		modelMapper.map(newCategory, category);
 		categoryRepository.save(category);
+	}
+	
+	public void deleteCategory(Category category) {
+		categoryRepository.delete(category);
 	}
 }
