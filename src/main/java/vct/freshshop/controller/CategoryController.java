@@ -1,6 +1,7 @@
 package vct.freshshop.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vct.freshshop.dto.CategoryDTO;
 import vct.freshshop.entity.Category;
 import vct.freshshop.entity.Product;
+import vct.freshshop.exception.ResourceNotFoundException;
 import vct.freshshop.service.CategoryService;
 
 @RequestMapping("/api")
@@ -34,9 +36,10 @@ public class CategoryController {
 		return new ResponseEntity<Object>(categories,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getProductByCategory/{id}")
-	public ResponseEntity<List<Product>> getProductByCategory(@PathVariable("id") int id){
-		List<Product> products = categoryService.getProductByCategory(id);
-		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+	@GetMapping("/category/{id}")
+	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") int id) {
+		Optional<CategoryDTO> category = categoryService.findById(id).map(c -> modelMapper.map(c, CategoryDTO.class));
+		return category.map(c -> new ResponseEntity<CategoryDTO>(c, HttpStatus.OK))
+				.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 	}
 }

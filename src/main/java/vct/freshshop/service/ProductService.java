@@ -38,17 +38,14 @@ public class ProductService {
 
 	public void addProduct(Product product) {
 		Optional<Category> category = categoryService.findById(product.getCategory().getId());
-		if (category.isPresent()) { // if category exist
-			product.setCategory(category.get());
-			System.out.println("Add product with category exists");
-		} else {
-			categoryRepository.save(product.getCategory());// add new category
-			System.out.println("Add product with category not exist");
-		}
+		category.ifPresentOrElse(c->product.setCategory(c), ()-> categoryRepository.save(product.getCategory()));
 		productRepository.save(product);
+		
 	}
 
 	public void updateProduct(Product product, Product newProduct) {// p is new product
+		Optional<Category> category = categoryService.findById(product.getCategory().getId());
+		category.ifPresentOrElse(c->product.setCategory(c), ()-> categoryRepository.save(newProduct.getCategory()));
 		modelMapper.map(newProduct, product);
 		productRepository.save(product);
 	}
