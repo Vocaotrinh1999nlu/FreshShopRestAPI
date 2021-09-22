@@ -7,19 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vct.freshshop.validation.in.CheckCategoryNameExist;
+import vct.freshshop.validation.in.CheckOderExist;
 
 @Entity
 @Getter 
 @Setter 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class OderItem {
 	
 	@Id
@@ -30,10 +32,14 @@ public class OderItem {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
+	@NotNull
+	@CheckCategoryNameExist
 	private Product product;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "oder_id", nullable = false)
+	@NotNull
+	@CheckOderExist
 	private Oder oder;
 	
 	public OderItem(Product p) {

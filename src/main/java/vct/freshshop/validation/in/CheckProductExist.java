@@ -14,17 +14,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import vct.freshshop.dto.CategoryDTO;
-import vct.freshshop.validation.imp.CategoryNameValidator;
-import vct.freshshop.validation.imp.ProductValidator;
+import vct.freshshop.validation.imp.CheckProductExistValidator;
 
 @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = CategoryNameValidator.class)
+@Constraint(validatedBy = CheckProductExistValidator.class)
 @Documented
-public @interface CheckCategoryName {
+public @interface CheckProductExist {
 
-	String message() default "Category name is exits.";
+	String message() default "Product input is not valid";
 
     Class<?>[] groups() default { };
 
@@ -34,6 +32,6 @@ public @interface CheckCategoryName {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        CheckCategoryName[] value();
+        CheckProductExist[] value();
     }
 }

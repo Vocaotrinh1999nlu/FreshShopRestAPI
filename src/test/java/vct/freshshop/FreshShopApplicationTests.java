@@ -11,9 +11,4 @@ class FreshShopApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
-	@Test
-	void createOderItemBuilder() {
-		OderItem oderItem = OderItem.builder().id(1).build();
-	}
 }

@@ -6,9 +6,9 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import vct.freshshop.service.in.CategoryServiceInterface;
-import vct.freshshop.validation.in.CheckCategoryName;
+import vct.freshshop.validation.in.CheckCategoryNameExist;
 
-public class CategoryNameValidator implements ConstraintValidator<CheckCategoryName, String>{
+public class CheckCategoryNameExistValidator implements ConstraintValidator<CheckCategoryNameExist, String>{
 
 	@Autowired
 	private CategoryServiceInterface categoryService;

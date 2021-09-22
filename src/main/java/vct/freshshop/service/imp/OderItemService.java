@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import vct.freshshop.entity.OderItem;
 import vct.freshshop.repositories.OderItemRepository;
 import vct.freshshop.service.in.OderItemServiceInterface;
+import vct.freshshop.service.in.ProductServiceInterface;
 
 @Service
 public class OderItemService implements OderItemServiceInterface {
@@ -16,6 +17,12 @@ public class OderItemService implements OderItemServiceInterface {
 	@Autowired
 	private OderItemRepository oderItemRepository;
 
+	@Autowired
+	private ProductServiceInterface productService;
+	
+	@Autowired
+	private OderItemServiceInterface oderServiceInterface;
+	
 	@Override
 	public List<OderItem> findAll() {
 		return oderItemRepository.findAll();

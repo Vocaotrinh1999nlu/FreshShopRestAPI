@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vct.freshshop.validation.in.CheckCategoryName;
+import vct.freshshop.validation.in.CheckCategoryNameExist;
 
 @Entity
 @Getter 
@@ -31,7 +31,7 @@ public class Category {
 	private int id;
 	
 	@NotBlank
-	@CheckCategoryName
+	@CheckCategoryNameExist
 	private String title;
 	
 	private boolean isActive;
