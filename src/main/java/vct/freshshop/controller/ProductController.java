@@ -19,26 +19,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vct.freshshop.dto.CategoryDTO;
 import vct.freshshop.dto.ProductDTO;
 import vct.freshshop.entity.Product;
-import vct.freshshop.exception.NullPointerException;
 import vct.freshshop.exception.ResourceNotFoundException;
-import vct.freshshop.service.ProductService;
+import vct.freshshop.service.in.ProductServiceInterface;
 
 @RestController
 @RequestMapping("/api")
 public class ProductController {
 
 	@Autowired
-	private ProductService productService;
+	private ProductServiceInterface productService;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@GetMapping("/product")
 	public ResponseEntity<List<ProductDTO>> getAllProduct() {
-		List<ProductDTO> products = productService.getAllProduct().stream()
+		List<ProductDTO> products = productService.findAll().stream()
 				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<List<ProductDTO>>(products, HttpStatus.OK);
 	}
@@ -54,7 +52,7 @@ public class ProductController {
 
 	@PostMapping("/product")
 	public ResponseEntity<String> createProduct(@Valid @RequestBody Product product) {
-		productService.addProduct(product);
+		productService.save(product);
 		return new ResponseEntity<String>("Created", HttpStatus.OK);
 	}
 
@@ -62,7 +60,7 @@ public class ProductController {
 	public ResponseEntity<String> updateProduct(@PathVariable("id") int id, @RequestBody Product newProduct) {
 		Optional<Product> product = productService.findById(id);
 		return product.map(p -> {
-			productService.updateProduct(p, newProduct);
+			productService.update(p, newProduct);
 			return new ResponseEntity<String>("Updated", HttpStatus.OK);
 		}).orElseThrow(() -> new ResourceNotFoundException("Not found product"));
 	}
@@ -71,7 +69,7 @@ public class ProductController {
 	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
 		Optional<Product> product = productService.findById(id);
 		return product.map(p -> {
-			productService.deleteProduct(p);
+			productService.remove(p);
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		}).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 	}

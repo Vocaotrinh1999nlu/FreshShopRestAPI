@@ -9,6 +9,5 @@ import vct.freshshop.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-	@Query("SELECT p FROM Product p WHERE p.id = ?1")
-	public Product getProductById(int id);
+	
 }

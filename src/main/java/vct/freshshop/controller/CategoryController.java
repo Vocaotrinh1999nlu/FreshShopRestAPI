@@ -22,21 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 import vct.freshshop.dto.CategoryDTO;
 import vct.freshshop.entity.Category;
 import vct.freshshop.exception.ResourceNotFoundException;
-import vct.freshshop.service.CategoryService;
+import vct.freshshop.service.in.CategoryServiceInterface;
 
 @RequestMapping("/api")
 @RestController
 public class CategoryController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private CategoryServiceInterface categoryService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/category")
 	public ResponseEntity<Object> getAllCategory(){
-		List<CategoryDTO> categories = categoryService.getAllCategory()
+		List<CategoryDTO> categories = categoryService.findAll()
 				.stream().map(c -> modelMapper.map(c, CategoryDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<Object>(categories,HttpStatus.OK);
 	}
@@ -50,7 +50,7 @@ public class CategoryController {
 	
 	@PostMapping("/category")
 	public ResponseEntity<String> addCategory(@Valid @RequestBody Category category){
-		categoryService.addCategory(category);
+		categoryService.save(category);
 		return new ResponseEntity<String>("Created", HttpStatus.OK);
 	}
 	
@@ -58,7 +58,7 @@ public class CategoryController {
 	public ResponseEntity<String> updateCategory(@Valid @RequestBody Category newCategory, @PathVariable("id") int id){
 		Optional<Category> category = categoryService.findById(id);
 		return category.map(c->{
-			categoryService.updateCategory(c, newCategory);
+			categoryService.update(c, newCategory);
 			return new ResponseEntity<String>("Updated", HttpStatus.OK);
 		}).orElseThrow(()-> new ResourceNotFoundException("Category not found"));
 	}
@@ -67,7 +67,7 @@ public class CategoryController {
 	public ResponseEntity<String> deleteCategory(@PathVariable("id") int id){
 		Optional<Category> category = categoryService.findById(id);
 		return category.map(c->{
-			categoryService.deleteCategory(c);
+			categoryService.remove(c);
 			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 		}).orElseThrow(()-> new ResourceNotFoundException("Category not found"));
 	}

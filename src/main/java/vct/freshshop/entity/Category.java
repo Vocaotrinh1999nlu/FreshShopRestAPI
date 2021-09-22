@@ -1,7 +1,6 @@
 package vct.freshshop.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,18 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vct.freshshop.validation.in.CheckCategoryName;
 
 @Entity
 @Getter 
@@ -33,8 +30,8 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotEmpty(message="Category name is not empty")
-	@NotNull(message="Category name is not null")
+	@NotBlank
+	@CheckCategoryName
 	private String title;
 	
 	private boolean isActive;
@@ -47,6 +44,6 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", title=" + title + ", isActive=" + isActive +"]";
+		return "Category [id=" + id + ", title=" + title + ", isActive=" + isActive + ", products=" + products + "]";
 	}
 }

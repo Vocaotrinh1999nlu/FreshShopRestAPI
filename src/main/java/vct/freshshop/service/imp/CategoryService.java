@@ -1,4 +1,4 @@
-package vct.freshshop.service;
+package vct.freshshop.service.imp;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vct.freshshop.entity.Category;
-import vct.freshshop.entity.Product;
 import vct.freshshop.repositories.CategoryRepository;
+import vct.freshshop.service.in.CategoryServiceInterface;
 
 @Service
-public class CategoryService {
+public class CategoryService implements CategoryServiceInterface{
 
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -20,27 +20,33 @@ public class CategoryService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public List<Category> getAllCategory(){
+	@Override
+	public List<Category> findAll(){
 		return categoryRepository.findAll();
 	}
 	
-	public List<Product> getProductByCategory(int id){
-		return categoryRepository.findByProduct(id);
-	}
+	@Override
 	public Optional<Category> findById(int id){
 		return categoryRepository.findById(id);
 	}
 	
-	public void addCategory(Category category) {
+	@Override
+	public void save(Category category) {
 		categoryRepository.save(category);
 	}
 	
-	public void updateCategory(Category category,Category newCategory) {
+	@Override
+	public void update(Category category,Category newCategory) {
 		modelMapper.map(newCategory, category);
 		categoryRepository.save(category);
 	}
 	
-	public void deleteCategory(Category category) {
+	@Override
+	public void remove(Category category) {
 		categoryRepository.delete(category);
+	}
+	
+	public Optional<Category> findByTitle(String name){
+		return categoryRepository.findByTitle(name);
 	}
 }
