@@ -12,10 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vct.freshshop.validation.in.CheckCustomerExist;
 
 @Entity
 @Getter 
@@ -47,6 +49,8 @@ public class Oder {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
+	@NotNull
+	//@CheckCustomerExist
 	private Customer customer;
 
 }

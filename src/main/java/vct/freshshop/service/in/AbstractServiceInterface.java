@@ -10,4 +10,5 @@ public interface AbstractServiceInterface<T> {
 	void save(T t);
 	void update(T t1, T t2);
 	void remove(T t);
+	boolean isExistById(int id);
 }

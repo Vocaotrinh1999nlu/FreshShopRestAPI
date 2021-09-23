@@ -64,4 +64,9 @@ public class ProductService implements ProductServiceInterface{
 	public void remove(Product product) {
 		productRepository.delete(product);
 	}
+
+	@Override
+	public boolean isExistById(int id) {
+		return !productRepository.existsById(id);
+	}
 }

@@ -30,10 +30,4 @@ public @interface CheckCategoryNameExist {
 
     Class<? extends Payload>[] payload() default { };
 
-    @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        CheckCategoryNameExist[] value();
-    }
 }

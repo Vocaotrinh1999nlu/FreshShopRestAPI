@@ -6,16 +6,16 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import vct.freshshop.entity.Oder;
-import vct.freshshop.service.in.OderItemServiceInterface;
+import vct.freshshop.service.in.OderServiceInterface;
 import vct.freshshop.validation.in.CheckOderExist;
 
 public class CheckOderExistValidator implements ConstraintValidator<CheckOderExist, Oder>{
 
 	@Autowired
-	private OderItemServiceInterface oderService;
+	private OderServiceInterface oderService;
 	@Override
 	public boolean isValid(Oder value, ConstraintValidatorContext context) {
-		return oderService.findById(value.getId()).isPresent();
+		return !oderService.isExistById(value.getId());
 	}
 
 }

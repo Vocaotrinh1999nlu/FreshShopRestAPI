@@ -43,7 +43,7 @@ public class Product {
 	private boolean isActive;
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
@@ -54,6 +54,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + ", price="
-				+ price + ", isActive=" + isActive + ", category=" + category + ", oderItem=" + oderItem + "]";
+				+ price + ", isActive=" + isActive+"]";
 	}
 }

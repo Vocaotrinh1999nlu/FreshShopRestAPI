@@ -22,5 +22,5 @@ public class ProductDTO {
 	
 	private boolean isActive;
 	
-	//private Category category;
+	private Category category;
 }

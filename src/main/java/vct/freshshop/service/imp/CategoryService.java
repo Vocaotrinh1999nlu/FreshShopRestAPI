@@ -49,4 +49,9 @@ public class CategoryService implements CategoryServiceInterface{
 	public Optional<Category> findByTitle(String name){
 		return categoryRepository.findByTitle(name);
 	}
+
+	@Override
+	public boolean isExistById(int id) {
+		return categoryRepository.existsById(id);
+	}
 }

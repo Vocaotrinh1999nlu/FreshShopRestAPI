@@ -42,8 +42,4 @@ public class Category {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<Product> products;
 
-	@Override
-	public String toString() {
-		return "Category [id=" + id + ", title=" + title + ", isActive=" + isActive + ", products=" + products + "]";
-	}
 }

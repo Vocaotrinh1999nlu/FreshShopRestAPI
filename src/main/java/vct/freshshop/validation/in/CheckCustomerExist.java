@@ -14,15 +14,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import vct.freshshop.validation.imp.CheckOderExistValidator;
+import vct.freshshop.validation.imp.CheckCustomerExistValidator;
 
 @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = CheckOderExistValidator.class)
+@Constraint(validatedBy = CheckCustomerExistValidator.class)
 @Documented
-public @interface CheckOderExist {
+public @interface CheckCustomerExist {
 
-	String message() default "Oder is not exist";
+	String message() default "Customer is not exist";
 
     Class<?>[] groups() default { };
 

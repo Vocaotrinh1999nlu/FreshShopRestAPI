@@ -16,6 +16,6 @@ public class CheckProductExistValidator implements ConstraintValidator<CheckProd
 	
 	@Override
 	public boolean isValid(Product value, ConstraintValidatorContext context) {
-		return productService.findById(value.getId()).isPresent();
+		return !productService.isExistById(value.getId());
 	}
 }

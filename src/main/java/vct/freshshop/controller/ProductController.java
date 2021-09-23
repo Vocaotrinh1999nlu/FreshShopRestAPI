@@ -44,7 +44,6 @@ public class ProductController {
 	@GetMapping("/product/{id}")
 	public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") int id) {
 		Optional<Product> product = productService.findById(id);
-		product.ifPresent(p->System.out.println(p.getCategory().toString()));
 		Optional<ProductDTO> productDTO = product.map(p -> modelMapper.map(p, ProductDTO.class));
 		return productDTO.map(p -> new ResponseEntity<ProductDTO>(p, HttpStatus.OK))
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found"));

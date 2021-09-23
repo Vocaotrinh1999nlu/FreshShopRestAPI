@@ -22,16 +22,9 @@ import vct.freshshop.validation.imp.CheckProductExistValidator;
 @Documented
 public @interface CheckProductExist {
 
-	String message() default "Product input is not valid";
+	String message() default "Product is not exist";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
-
-    @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        CheckProductExist[] value();
-    }
 }
