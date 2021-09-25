@@ -31,19 +31,16 @@ public class CategoryController {
 	@Autowired
 	private CategoryServiceInterface categoryService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-	
 	@GetMapping("/category")
 	public ResponseEntity<Object> getAllCategory(){
 		List<CategoryDTO> categories = categoryService.findAll()
-				.stream().map(c -> modelMapper.map(c, CategoryDTO.class)).collect(Collectors.toList());
+				.stream().map(c -> categoryService.convertToDTO(c)).collect(Collectors.toList());
 		return new ResponseEntity<Object>(categories,HttpStatus.OK);
 	}
 	
 	@GetMapping("/category/{id}")
 	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") int id) {
-		Optional<CategoryDTO> category = categoryService.findById(id).map(c -> modelMapper.map(c, CategoryDTO.class));
+		Optional<CategoryDTO> category = categoryService.findById(id).map(c -> categoryService.convertToDTO(c));
 		return category.map(c -> new ResponseEntity<CategoryDTO>(c, HttpStatus.OK))
 				.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 	}

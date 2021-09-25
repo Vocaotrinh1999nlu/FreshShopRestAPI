@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import vct.freshshop.dto.CategoryDTO;
 import vct.freshshop.dto.ProductDTO;
+import vct.freshshop.dto.ProductDTOV2;
 import vct.freshshop.entity.Category;
 import vct.freshshop.entity.Product;
 import vct.freshshop.exception.NullPointerException;

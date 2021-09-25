@@ -43,7 +43,7 @@ public class CustomerService implements CustomerServiceInterface{
 
 	@Override
 	public boolean isExistById(int id) {
-		return customerRepository.existsById(id);
+		return !customerRepository.existsById(id);
 	}
 
 }

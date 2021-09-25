@@ -2,10 +2,14 @@ package vct.freshshop.service.imp;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vct.freshshop.dto.OderItemDTO;
+import vct.freshshop.dto.ProductDTO;
 import vct.freshshop.entity.Oder;
 import vct.freshshop.entity.OderItem;
 import vct.freshshop.entity.Product;
@@ -27,9 +31,12 @@ public class OderItemService implements OderItemServiceInterface {
 	@Autowired
 	private OderServiceInterface oderService;
 
+	@Autowired
+	private ModelMapper modelMapper;
 	@Override
 	public List<OderItem> findAll() {
-		return oderItemRepository.findAll();
+		List<OderItem> oderItem = oderItemRepository.findAll();
+		return oderItem;
 	}
 
 	@Override
@@ -39,37 +46,36 @@ public class OderItemService implements OderItemServiceInterface {
 
 	@Override
 	public void save(OderItem t) {
-		System.out.println(t.getProduct().getId());
-		Optional<Product> product = productService.findById(t.getProduct().getId());
-		Optional<Oder> oder = oderService.findById(t.getOder().getId());
-		product.ifPresentOrElse(p -> t.setProduct(p),
-				() -> new ResourceNotFoundException("Not found product for save oderItem"));
-		oder.ifPresentOrElse(o -> t.setOder(o),
-				() -> new ResourceNotFoundException("Not found oder for save oderItem"));
-		boolean isProductExist = product.isPresent();
-		boolean isOderExist = oder.isPresent();
-		if(isProductExist && isOderExist) {
-			t.setProduct(product.get());
-			t.setOder(oder.get());
-			oderItemRepository.save(t);
-		}
+		//Because i have checked product and order is exist in validation, I'm not check in here.
+		t.setProduct(productService.findById(t.getId()).get());
+		t.setOder(oderService.findById(t.getId()).get());
+		oderItemRepository.save(t);
 	}
 
 	@Override
-	public void update(OderItem t1, OderItem t2) {
-		// TODO Auto-generated method stub
-
+	public void update(OderItem oldOderItem, OderItem newOderItem) {
+		//not update oder and product in oder item
+		//just update quantity
+		oldOderItem.setQuantity(newOderItem.getQuantity());
+		oderItemRepository.save(oldOderItem);
 	}
 
 	@Override
 	public void remove(OderItem t) {
-		// TODO Auto-generated method stub
-
+		oderItemRepository.delete(t);
 	}
 
 	@Override
 	public boolean isExistById(int id) {
 		return oderItemRepository.existsById(id);
+	}
+
+	@Override
+	public OderItemDTO convertToDTO(OderItem o) {
+		ProductDTO productDTO= modelMapper.map(o.getProduct(), ProductDTO.class);
+		OderItemDTO oderItemDTO = modelMapper.map(o, OderItemDTO.class);
+		oderItemDTO.setProduct(productDTO);
+		return oderItemDTO;
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vct.freshshop.dto.ProductDTO;
+import vct.freshshop.dto.ProductDTOV2;
 import vct.freshshop.entity.Product;
 import vct.freshshop.exception.ResourceNotFoundException;
 import vct.freshshop.service.in.ProductServiceInterface;

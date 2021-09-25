@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +33,7 @@ public class Oder {
 	
 	@OneToMany(mappedBy = "oder", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<OderItem> oderItems;
 	
 	private LocalDateTime oderDate;
@@ -47,10 +50,10 @@ public class Oder {
 	
 	private String shipAdress;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
 	@NotNull
-	//@CheckCustomerExist
+	@CheckCustomerExist
 	private Customer customer;
 
 }

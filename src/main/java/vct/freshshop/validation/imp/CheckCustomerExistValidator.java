@@ -16,7 +16,7 @@ public class CheckCustomerExistValidator implements ConstraintValidator<CheckCus
 	
 	@Override
 	public boolean isValid(Customer value, ConstraintValidatorContext context) {
-		return customerService.isExistById(value.getId());
+		return !customerService.isExistById(value.getId());
 	}
 
 }

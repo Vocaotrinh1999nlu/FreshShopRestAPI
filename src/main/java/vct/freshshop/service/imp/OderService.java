@@ -41,23 +41,19 @@ public class OderService implements OderServiceInterface{
 
 	@Override
 	public void save(Oder t) {
-		Optional<Customer> customer = customerService.findById(t.getCustomer().getId());
-		customer.ifPresentOrElse(c->{
-			t.setCustomer(c);
-			oderRepository.save(t);
-		}, ()->new ResourceNotFoundException("Not found customer for save oder"));
+		t.setCustomer(customerService.findById(t.getCustomer().getId()).get());
+		oderRepository.save(t);
 	}
 
 	@Override
 	public void update(Oder t1, Oder t2) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void remove(Oder t) {
-		// TODO Auto-generated method stub
-		
+		oderRepository.delete(t);
 	}
 
 	@Override
